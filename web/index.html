@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17201c"><meta name="description" content="Trace reported email relays and authentication results locally.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Mail Path · CoolCode</title><link rel="stylesheet" href="./style.css"><script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to header analyzer</a>
+<header class="mast"><div class="wrap"><a href="../">CoolCode.ca</a><button id="theme" type="button" aria-label="Dark mode" aria-pressed="false" hidden>◐</button></div></header>
+<section class="hero"><div class="wrap"><div><h1>Mail Path</h1><p>Trace reported email relays, compare timestamps, and see which servers reported SPF, DKIM, or DMARC results.</p></div><aside><strong>Analyzed in this tab</strong><p>No message data leaves the page. Exported reports retain server names, IPs, and times. Review them before sharing.</p></aside></div></section>
+<main id="main" class="wrap">
+<section class="box" id="input" aria-labelledby="input-title">
+<h2 id="input-title">Open message headers</h2>
+<p class="muted">Use Show original, View source, or Internet headers in your mail app. Copy the initial header block or open a saved .eml file.</p>
+<label class="field" for="paste">Raw message headers</label>
+<textarea id="paste" rows="8" maxlength="500000" autocomplete="off" spellcheck="false" placeholder="Received: from relay.example.net by inbox.example.com ..."></textarea>
+<div class="row actions"><button id="analyse" class="primary" type="button">Analyze headers</button><button id="choose" type="button">Open EML or text</button><input id="file" type="file" accept=".eml,.txt,message/rfc822,text/plain" hidden><button id="sample" type="button">Try sample</button><button id="clear" type="button">Clear</button></div>
+<p id="status" class="status" role="status" aria-live="polite">Paste a header block, open message source, or try the example.</p>
+</section>
+<div id="report" hidden>
+<section class="box" aria-labelledby="route-title">
+<div class="row between"><h2 id="route-title">Reported delivery path</h2><button id="export" type="button">Download report JSON</button></div>
+<div id="stats" class="stats"></div>
+<p class="muted">Relay fields are read from bottom to top. Each receiving server may prepend its own claim. Fields outside your provider’s trusted path can be forged.</p>
+<p id="no-hops" hidden>No Received header fields were available.</p><ol id="hops" class="path"></ol>
+</section>
+<section class="box" aria-labelledby="auth-title"><h2 id="auth-title">Authentication observations</h2>
+<p class="muted">Results are recorded claims. The app reads them without contacting DNS or rechecking signed content. Use DNS Lens separately to inspect currently published mail policy.</p>
+<div class="scroll"><table><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Reporting server</th><th scope="col">Reported domain</th><th scope="col">Field</th></tr></thead><tbody id="auth"></tbody></table></div>
+</section>
+<section class="box" id="notes" aria-labelledby="notes-title" hidden><h2 id="notes-title">Review notes</h2><ul id="warnings"></ul></section>
+</div>
+<noscript>Enable JavaScript to analyze headers locally.</noscript>
+</main>
+<footer class="footer"><div class="wrap"><a href="../dnslens/">Check public DNS in DNS Lens</a><a href="https://www.rfc-editor.org/rfc/rfc5321">SMTP relay fields</a><a href="https://www.rfc-editor.org/rfc/rfc8601">Authentication-Results</a><a href="https://github.com/jsdyer/mailpath">Source code</a></div></footer>
+</body>
+</html>
