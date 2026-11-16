@@ -30,3 +30,12 @@ test('flags reverse times and missing trace timezone', () => {
   assert.equal(data.warnings.length, 2);
   assert.throws(() => parseMail('Random text'), /No message header fields/);
 });
+
+test('extracts DKIM key lookup details without retaining signature material', () => {
+  const data = parseMail('DKIM-Signature: v=1; d=sender.example;\r\n s=mail2026; b=PRIVATE_SIGNATURE\r\nDKIM-Signature: v=1; d=other.example; s=first; s=second; b=SECRET\r\n\r\nbody');
+  assert.deepEqual(data.signingKeys, [
+    { domain: 'sender.example', selector: 'mail2026' },
+    { domain: 'other.example', selector: null },
+  ]);
+  assert.doesNotMatch(JSON.stringify(data), /PRIVATE_SIGNATURE|SECRET|body/);
+});

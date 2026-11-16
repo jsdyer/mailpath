@@ -37,6 +37,10 @@ function show(value, fromFile) {
     tag(item.result, /fail|error/.test(item.result) ? 'review' : undefined),
     item.server ?? 'Unavailable', item.domain ?? 'Unavailable', el('code', item.field),
   ]), 5, 'No recognized authentication results found.');
+  table($('signing-keys'), value.signingKeys.map(({ domain, selector }) => [
+    domain ?? 'Unavailable', selector ?? 'Unavailable',
+    domain && selector ? `${selector}._domainkey.${domain}` : 'Unavailable',
+  ]), 3, 'No DKIM signature fields found.');
   $('warnings').replaceChildren(...value.warnings.map((warning) => el('li', warning)));
   $('notes').hidden = value.warnings.length === 0;
   $('report').hidden = false;
@@ -50,6 +54,7 @@ function clear() {
   $('stats').replaceChildren();
   $('hops').replaceChildren();
   $('auth').replaceChildren();
+  $('signing-keys').replaceChildren();
   $('warnings').replaceChildren();
   $('paste').value = '';
   announce('Paste a header block, open message source, or try the example.');

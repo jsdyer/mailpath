@@ -103,6 +103,22 @@ function spfResult(value) {
   return [{ method: 'spf', result, server: host(serverMatch?.[1]), domain: host(domain), field: 'received-spf' }];
 }
 
+function signatureDetails(value) {
+  const tags = new Map();
+  const duplicates = new Set();
+  for (const part of splitProtocol(value)) {
+    const match = /^\s*([a-z][a-z0-9_]*)\s*=\s*(.*?)\s*$/i.exec(part);
+    if (!match) continue;
+    const name = match[1].toLowerCase();
+    if (tags.has(name)) duplicates.add(name);
+    tags.set(name, match[2]);
+  }
+  return {
+    domain: duplicates.has('d') ? null : host(tags.get('d')),
+    selector: duplicates.has('s') ? null : host(tags.get('s')),
+  };
+}
+
 export function parseMail(input) {
   if (typeof input !== 'string' || input.length > MAX_TEXT) throw new Error('Open up to 500,000 characters of message headers.');
   const rawLines = input.replace(/^\uFEFF/, '').split(/\r\n|\r|\n/);
@@ -124,7 +140,9 @@ export function parseMail(input) {
     if (name === 'received-spf') return spfResult(value);
     return [];
   }).slice(0, 250);
-  const signatures = fields.filter((field) => field.name === 'dkim-signature').length;
+  const signatureFields = fields.filter((field) => field.name === 'dkim-signature');
+  const signatures = signatureFields.length;
+  const signingKeys = signatureFields.map((field) => signatureDetails(field.value));
   const warnings = [];
   for (const [index, hop] of hops.entries()) {
     const previous = hops[index - 1];
@@ -140,7 +158,7 @@ export function parseMail(input) {
   const first = hops[0]?.timestamp ?? null;
   const final = hops[hops.length - 1]?.timestamp ?? null;
   return {
-    hops, auth, signatures, warnings,
+    hops, auth, signatures, signingKeys, warnings,
     duration: hops.length > 1 && first !== null && final !== null && final >= first ? final - first : null,
   };
 }

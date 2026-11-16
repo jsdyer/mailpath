@@ -29,6 +29,9 @@
 <section class="box" aria-labelledby="auth-title"><h2 id="auth-title">Authentication observations</h2>
 <p class="muted">Results are recorded claims. The app reads them without contacting DNS or rechecking signed content. Use DNS Lens separately to inspect currently published mail policy.</p>
 <div class="scroll"><table><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Reporting server</th><th scope="col">Reported domain</th><th scope="col">Field</th></tr></thead><tbody id="auth"></tbody></table></div>
+<h3>DKIM signing domains and selectors</h3>
+<p class="muted">Use these values in <a href="../dnslens/">DNS Lens</a> to inspect the currently published key. A published key does not verify a message signature.</p>
+<div class="scroll"><table><thead><tr><th scope="col">Signing domain (d=)</th><th scope="col">Selector (s=)</th><th scope="col">DNS name to inspect</th></tr></thead><tbody id="signing-keys"></tbody></table></div>
 </section>
 <section class="box" id="notes" aria-labelledby="notes-title" hidden><h2 id="notes-title">Review notes</h2><ul id="warnings"></ul></section>
 </div>

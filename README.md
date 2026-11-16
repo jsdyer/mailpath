@@ -6,6 +6,8 @@ Message files stay in the browser. Imports inspect a bounded prefix of at most 5
 
 The app reads source claims and does not conduct cryptographic checks. A route may include forged fields or inconsistent clocks. The sources are [RFC 5321](https://www.rfc-editor.org/rfc/rfc5321) for relay traces and [RFC 8601](https://www.rfc-editor.org/rfc/rfc8601) for Authentication-Results fields. DNS Lens can inspect current public DNS policy separately.
 
+DKIM signature fields expose their signing domains and selectors for looking up current keys in DNS Lens. The app does not retain the signature value. A current DNS key alone does not verify a message signature.
+
 ## Build and test
 
 ```sh
