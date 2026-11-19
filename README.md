@@ -1,6 +1,6 @@
 # Mail Path
 
-Mail Path traces the relay hops and authentication results recorded in an email’s headers. Paste fields, open a local .eml or text file, or try a fictional sample. The route and JSON export show reported relay addresses, timestamps, delays and recognized authentication claims.
+Mail Path traces the relay hops and authentication results recorded in an email’s headers. Paste the headers of a message you received, or open a local .eml or text file. The route and JSON export show reported relay addresses, timestamps, delays and recognized authentication claims.
 
 Message files stay in the browser. Imports inspect a bounded prefix of at most 500,000 bytes. Parsing stops at the end of the header block. Reports omit message content, local mailbox identifiers and signature values. They retain relay addresses, domains and timestamps, so review an export before sharing. A paste remains visible in its input until cleared.
 
@@ -17,3 +17,10 @@ python3 -m http.server --directory dist 8000
 ```
 
 Deploy `dist/` to GitHub Pages. No dependency installation is required.
+
+
+<!-- coolcode:guide -->
+Copy the Received and Authentication-Results fields from a message you received, including indented continuation lines. The timeline shows which servers recorded each hop and the delay between their timestamps.
+<!-- /coolcode:guide -->
+
+In Gmail on a computer, open the message menu beside Reply and choose Show original. New Outlook and Outlook on the web have View message details under More actions → View. Classic Outlook for Windows puts Internet headers under File → Properties in the opened message. [Gmail instructions](https://support.google.com/mail/answer/29436?hl=en) · [Outlook instructions](https://support.microsoft.com/en-us/outlook/view-internet-message-headers-in-outlook).

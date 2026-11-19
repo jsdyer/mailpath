@@ -1,6 +1,5 @@
 import { $, announce, downloadJSON, el, installTheme, stat, table, tag, wireDrop } from './ui.mjs';
 import { parseMail } from './model.mjs';
-import { SAMPLE } from './sample.mjs';
 
 let report = null;
 let generation = 0;
@@ -57,7 +56,7 @@ function clear() {
   $('signing-keys').replaceChildren();
   $('warnings').replaceChildren();
   $('paste').value = '';
-  announce('Paste a header block, open message source, or try the example.');
+  announce('Paste the headers from a received message, or open its .eml file.');
 }
 
 function analyse() {
@@ -81,7 +80,6 @@ async function open(file) {
 }
 
 $('analyse').addEventListener('click', analyse);
-$('sample').addEventListener('click', () => { $('paste').value = SAMPLE; analyse(); });
 $('clear').addEventListener('click', clear);
 $('choose').addEventListener('click', () => $('file').click());
 $('export').addEventListener('click', () => { if (report) downloadJSON(report, 'mail-path-report.json'); });

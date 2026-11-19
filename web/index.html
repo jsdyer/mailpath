@@ -13,11 +13,16 @@
 <main id="main" class="wrap">
 <section class="box" id="input" aria-labelledby="input-title">
 <h2 id="input-title">Open message headers</h2>
-<p class="muted">Use Show original, View source, or Internet headers in your mail app. Copy the initial header block or open a saved .eml file.</p>
+<p class="muted">Open a message you received. Paste its headers up to the first blank line, or choose its saved .eml file.</p>
+<details class="header-help"><summary>Where to find the headers</summary>
+<ul><li><strong>Gmail on a computer.</strong> Open the message. In the menu beside Reply, choose Show original. Copy the header block or download the original. <a href="https://support.google.com/mail/answer/29436?hl=en">Gmail instructions ↗</a></li>
+<li><strong>New Outlook or Outlook on the web.</strong> Open More actions, then View → View message details. In classic Outlook for Windows, open the message in its own window and select File → Properties → Internet headers. <a href="https://support.microsoft.com/en-us/outlook/view-internet-message-headers-in-outlook">Outlook instructions ↗</a></li></ul>
+<p>You can paste only the Received and Authentication-Results fields, including their indented continuation lines. Add DKIM-Signature fields to inspect the signing domains and selectors. Message bodies and attachments are unnecessary.</p>
+</details>
 <label class="field" for="paste">Raw message headers</label>
-<textarea id="paste" rows="8" maxlength="500000" autocomplete="off" spellcheck="false" placeholder="Received: from relay.example.net by inbox.example.com ..."></textarea>
-<div class="row actions"><button id="analyse" class="primary" type="button">Analyze headers</button><button id="choose" type="button">Open EML or text</button><input id="file" type="file" accept=".eml,.txt,message/rfc822,text/plain" hidden><button id="sample" type="button">Try sample</button><button id="clear" type="button">Clear</button></div>
-<p id="status" class="status" role="status" aria-live="polite">Paste a header block, open message source, or try the example.</p>
+<textarea id="paste" rows="8" maxlength="500000" autocomplete="off" spellcheck="false" placeholder="Paste Received and Authentication-Results fields here"></textarea>
+<div class="row actions"><button id="analyse" class="primary" type="button">Analyze headers</button><button id="choose" type="button">Open EML or text</button><input id="file" type="file" accept=".eml,.txt,message/rfc822,text/plain" hidden><button id="clear" type="button">Clear</button></div>
+<p id="status" class="status" role="status" aria-live="polite">Paste the headers from a received message, or open its .eml file.</p>
 </section>
 <div id="report" hidden>
 <section class="box" aria-labelledby="route-title">

@@ -95,3 +95,7 @@ ol.path { list-style: none; counter-reset: hops; padding: 0; }
   .wrap { width: calc(100% - 1.3rem); }
   td, th { padding: .48rem; }
 }
+
+.header-help { margin: .65rem 0 1rem; }
+.header-help summary { cursor: pointer; font-weight: 650; }
+.header-help li { margin: .4rem 0; }

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseMail } from '../web/model.mjs';
-import { SAMPLE } from '../web/sample.mjs';
+import { SAMPLE } from './mail-fixture.mjs';
 
 test('unfolds fields and returns oldest-to-newest relay claims', () => {
   const data = parseMail(SAMPLE);
